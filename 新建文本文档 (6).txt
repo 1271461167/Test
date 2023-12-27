@@ -6,7 +6,7 @@ create database itcast;
 use itcast;
 show tables;
 create table tb_user(id int, name varchar(50),age int,sex varchar(1));
-insert into tb_user(id,name,age,sex)values(001,'张三',23,'男');
+insert into tb_user(id,name,age,sex)values(001,'张三',24,'男');
 select* from tb_user;
 alter table tb_user change sex gender varchar(1);
 show variables like '%ssl%';
