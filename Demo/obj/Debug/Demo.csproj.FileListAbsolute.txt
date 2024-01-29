@@ -18,3 +18,4 @@ C:\Users\ywh\Desktop\test\Demo\obj\Debug\View\LoginView.baml
 C:\Users\ywh\Desktop\test\Demo\obj\Debug\Control\UserNameTextBox.baml
 C:\Users\ywh\Desktop\test\Demo\obj\Debug\App.baml
 C:\Users\ywh\Desktop\test\Demo\obj\Debug\Control\PasswordBoxStyle.baml
+C:\Users\ywh\Desktop\Test\Demo\obj\Debug\GeneratedInternalTypeHelper.g.cs

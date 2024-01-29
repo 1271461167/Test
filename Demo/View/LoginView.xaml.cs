@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Demo.Model;
+using Demo.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace Demo.View
 {
@@ -22,6 +13,13 @@ namespace Demo.View
         public LoginView()
         {
             InitializeComponent();
+            this.DataContext = new LoginViewModel();
+        }
+
+        private void click(object sender, RoutedEventArgs e)
+        {
+
+            MessageBox.Show(LoginViewModel.loginModel.Password);
         }
     }
 }
