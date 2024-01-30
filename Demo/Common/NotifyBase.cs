@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Demo.Common
 {
-    public class NotifyBase
+    public class NotifyBase: INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public void DoNotify([CallerMemberName] string propName = "")

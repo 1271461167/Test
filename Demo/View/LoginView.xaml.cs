@@ -2,6 +2,7 @@
 using Demo.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Demo.View
 {
@@ -14,12 +15,6 @@ namespace Demo.View
         {
             InitializeComponent();
             this.DataContext = new LoginViewModel();
-        }
-
-        private void click(object sender, RoutedEventArgs e)
-        {
-
-            MessageBox.Show(LoginViewModel.loginModel.Password);
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace Demo.Common
 {
-    public class CommandBase
+    public class CommandBase:ICommand
     {
         public event EventHandler CanExecuteChanged
         {

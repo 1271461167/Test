@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Demo.View;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,15 @@ namespace Demo
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            if(new LoginView().ShowDialog()==true)
+            {
+                new MainWindow().ShowDialog();
+            }
+            Application.Current.Shutdown();
+        }
     }
 }
