@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\ywh\Desktop\Test1227\Demo\obj\Debug\
+C:\Users\ywh\Desktop\Test\Demo\obj\Debug\
 Demo
 none
 false
 DEBUG;TRACE
-C:\Users\ywh\Desktop\Test1227\Demo\App.xaml
-4-1800313338
+C:\Users\ywh\Desktop\Test\Demo\App.xaml
+7226091813
 
-15353228140
-15609671341
-Control\PasswordBoxStyle.xaml;Control\UserNameTextBox.xaml;View\LoginView.xaml;View\MainWindow.xaml;
+20-268324783
+16227511203
+Control\NavRadioButton.xaml;Control\PasswordBoxStyle.xaml;Control\UserNameTextBox.xaml;View\LoginView.xaml;View\MainPage.xaml;View\MainWindow.xaml;View\ParameterPage.xaml;
 
-False
+True
 

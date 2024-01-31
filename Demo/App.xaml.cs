@@ -18,7 +18,7 @@ namespace Demo
         {
             base.OnStartup(e);
 
-            if(new LoginView().ShowDialog()==true)
+            if (new LoginView().ShowDialog() == true)
             {
                 new MainWindow().ShowDialog();
             }

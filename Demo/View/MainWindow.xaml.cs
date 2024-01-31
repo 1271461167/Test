@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Demo.Common;
+using Demo.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +25,9 @@ namespace Demo
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = new MainWindowViewModel();
+            MainWindowViewModel.User.UserName = GlobalValues.role.Name;
+            MainWindowViewModel.User.Permission = GlobalValues.role.Identity;
         }
     }
 }

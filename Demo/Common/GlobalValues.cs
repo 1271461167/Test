@@ -8,6 +8,6 @@ namespace Demo.Common
 {
     public class GlobalValues
     {
-        public static UserRole role {  get; set; }
+        public static UserRole role {  get; set; }=new UserRole();
     }
 }

@@ -52,3 +52,11 @@ C:\Users\ywh\Desktop\Test\Demo\bin\Debug\System.Threading.Tasks.Extensions.dll
 C:\Users\ywh\Desktop\Test\Demo\bin\Debug\System.Numerics.Vectors.dll
 C:\Users\ywh\Desktop\Test\Demo\bin\Debug\System.Buffers.dll
 C:\Users\ywh\Desktop\Test\Demo\obj\Debug\Demo.csproj.CopyComplete
+C:\Users\ywh\Desktop\Test\Demo\obj\Debug\Control\NavRadioButton.baml
+C:\Users\ywh\Desktop\Test\Demo\obj\Debug\View\MainPage.g.cs
+C:\Users\ywh\Desktop\Test\Demo\obj\Debug\View\ParameterPage.g.cs
+C:\Users\ywh\Desktop\Test\Demo\obj\Debug\View\MainPage.baml
+C:\Users\ywh\Desktop\Test\Demo\obj\Debug\View\ParameterPage.baml
+C:\Users\ywh\Desktop\Test\Demo\bin\Debug\Microsoft.Xaml.Behaviors.dll
+C:\Users\ywh\Desktop\Test\Demo\bin\Debug\Microsoft.Xaml.Behaviors.pdb
+C:\Users\ywh\Desktop\Test\Demo\bin\Debug\Microsoft.Xaml.Behaviors.xml
