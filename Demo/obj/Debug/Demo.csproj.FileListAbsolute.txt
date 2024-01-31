@@ -47,3 +47,8 @@ C:\Users\ywh\Desktop\Test1227\Demo\bin\Debug\System.Numerics.Vectors.dll
 C:\Users\ywh\Desktop\Test1227\Demo\bin\Debug\System.Buffers.dll
 C:\Users\ywh\Desktop\Test1227\Demo\bin\Debug\MySql.Data.xml
 C:\Users\ywh\Desktop\Test1227\Demo\obj\Debug\Demo.csproj.CopyComplete
+C:\Users\ywh\Desktop\Test\Demo\bin\Debug\System.Memory.dll
+C:\Users\ywh\Desktop\Test\Demo\bin\Debug\System.Threading.Tasks.Extensions.dll
+C:\Users\ywh\Desktop\Test\Demo\bin\Debug\System.Numerics.Vectors.dll
+C:\Users\ywh\Desktop\Test\Demo\bin\Debug\System.Buffers.dll
+C:\Users\ywh\Desktop\Test\Demo\obj\Debug\Demo.csproj.CopyComplete
