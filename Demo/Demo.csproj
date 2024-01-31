@@ -125,6 +125,14 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Assets\Images\admin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\operater.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\Images\Dunkin-Logo.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
