@@ -71,7 +71,7 @@
                 <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Center">
                     <Border Width="40" Height="40" CornerRadius="20">
                         <Border.Background>
-                            <ImageBrush ImageSource="../Assets/Images/admin.png"/>
+                            <ImageBrush ImageSource="{Binding User.Avatar}"/>
                         </Border.Background>
                     </Border>
                     <TextBlock x:Name="userinfo" Margin="10,0,0,0" Text="{Binding User.UserName}" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20" Foreground="White">
@@ -109,7 +109,7 @@
                             <DropShadowEffect Color="White" ShadowDepth="0" BlurRadius="5" Opacity="0.3" Direction="0"/>
                         </Border.Effect>
                         <Border.Background>
-                            <ImageBrush ImageSource="../Assets/Images/admin.png"/>
+                            <ImageBrush ImageSource="{Binding User.Avatar}"/>
                         </Border.Background>
                     </Border>
                     <Grid Grid.Row="1" Margin="20,10">
@@ -129,6 +129,7 @@
                             <RowDefinition Height="45"/>
                             <RowDefinition Height="45"/>
                             <RowDefinition Height="45"/>
+                            <RowDefinition Height="45"/>
                             <RowDefinition/>
                         </Grid.RowDefinitions>
                         <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
@@ -140,9 +141,13 @@
                             <RadioButton Content="男" Template="{StaticResource GenderRadioButton}" IsChecked="{Binding User.Gender,Converter={StaticResource gender},ConverterParameter=1}"/>
                             <RadioButton Content="女" Template="{StaticResource GenderRadioButton}" IsChecked="{Binding User.Gender,Converter={StaticResource gender},ConverterParameter=2}"/>
                         </StackPanel>
-                        <StackPanel Grid.Row="2" VerticalAlignment="Center" Orientation="Horizontal">
+                        <StackPanel Grid.Row="3" VerticalAlignment="Center" Orientation="Horizontal">
                             <TextBlock Text="权  限"/>
                             <TextBlock Text="{Binding User.Permission}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" VerticalAlignment="Center" Orientation="Horizontal">
+                            <TextBlock Text="年  龄"/>
+                            <TextBlock Text="{Binding User.Age}"/>
                         </StackPanel>
                     </Grid>
                 </Grid>

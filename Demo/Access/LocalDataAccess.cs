@@ -81,6 +81,9 @@ namespace Demo.Access
                     role.Identity = dataSet.Tables[0].Rows[0]["permission"].ToString();
                     role.Name = dataSet.Tables[0].Rows[0]["name"].ToString();
                     role.Password = dataSet.Tables[0].Rows[0]["password"].ToString();
+                    role.Gender = int.Parse(dataSet.Tables[0].Rows[0]["gender"].ToString());
+                    role.Avatar = dataSet.Tables[0].Rows[0]["avatar"].ToString();
+                    role.Age = int.Parse(dataSet.Tables[0].Rows[0]["age"].ToString()); 
                     return role;
                 }
                 catch(Exception)

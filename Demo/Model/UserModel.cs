@@ -38,6 +38,13 @@ namespace Demo.Model
 			set { _gender = value;this.DoNotify(); }
 		}
 
+		private int _age;
+
+		public int Age
+		{
+			get { return _age; }
+			set { _age = value;this.DoNotify(); }
+		}
 
 	}
 }
