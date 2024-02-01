@@ -5,9 +5,52 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Demo"
         xmlns:behaviour="http://schemas.microsoft.com/xaml/behaviors"
+        xmlns:converter="clr-namespace:Demo.Converter"
         mc:Ignorable="d"
         FontFamily="SimSun" FontWeight="ExtraLight"
         Title="MainWindow" Height="800" Width="1250">
+    <Window.Resources>
+        <Storyboard x:Key="UserInfoStoryboard">
+            <DoubleAnimation Duration="0:0:0.2" To="0"
+                             Storyboard.TargetName="tt"
+                             Storyboard.TargetProperty="X"/>
+        </Storyboard>
+        <Storyboard x:Key="CloseUserInfoStoryboard">
+            <DoubleAnimation Duration="0:0:0.2"
+                     Storyboard.TargetName="tt"
+                     Storyboard.TargetProperty="X"/>
+        </Storyboard>
+        <ControlTemplate TargetType="RadioButton" x:Key="GenderRadioButton">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Border Width="14" Height="14" CornerRadius="7" BorderThickness="1" BorderBrush="#3a77bf" Background="White" Margin="0,0,5,0" VerticalAlignment="Center">
+                    <Border x:Name="point" Width="10" Height="10" CornerRadius="5" Background="#3a77bf" Visibility="Collapsed"/>
+                </Border>
+                <ContentControl Content="{TemplateBinding Content}" 
+                                VerticalAlignment="Center" 
+                                Grid.Column="1"
+                                
+                                />
+            </Grid>
+            <ControlTemplate.Triggers>
+                <Trigger Property="IsChecked" Value="True">
+                    <Setter TargetName="point" Property="Visibility" Value="Visible"/>
+                </Trigger>
+            </ControlTemplate.Triggers>
+        </ControlTemplate>
+        <converter:GenderConverter x:Key="gender"/>
+    </Window.Resources>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="TextBlock.MouseLeftButtonUp" SourceName="userinfo">
+            <BeginStoryboard Storyboard="{StaticResource UserInfoStoryboard}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="Button.Click" SourceName="btn_CloseInfo">
+            <BeginStoryboard Storyboard="{StaticResource CloseUserInfoStoryboard}"/>
+        </EventTrigger>
+    </Window.Triggers>
     <Border Margin="5" Background="White" CornerRadius="10">
         <Border.Effect>
             <DropShadowEffect Color="gray" ShadowDepth="0" BlurRadius="5" Opacity="0.3" Direction="0"/>
@@ -31,12 +74,12 @@
                             <ImageBrush ImageSource="../Assets/Images/admin.png"/>
                         </Border.Background>
                     </Border>
-                    <TextBlock Margin="10,0,0,0" Text="{Binding User.UserName}" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20" Foreground="White">
-                        <behaviour:Interaction.Triggers>
+                    <TextBlock x:Name="userinfo" Margin="10,0,0,0" Text="{Binding User.UserName}" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="20" Foreground="White">
+                        <!--<behaviour:Interaction.Triggers>
                             <behaviour:EventTrigger EventName="MouseLeftButtonUp">
                                 <behaviour:InvokeCommandAction Command="{Binding}"/>
                             </behaviour:EventTrigger>
-                        </behaviour:Interaction.Triggers>
+                        </behaviour:Interaction.Triggers>-->
                     </TextBlock>
                 </StackPanel>
                 <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
@@ -47,6 +90,64 @@
                 </StackPanel>
                 <ContentControl Grid.Row="3" Content="{Binding ViewModel.MainContent}"/>
             </Grid>
+            <!--侧滑栏-->
+            <Border Width="240" HorizontalAlignment="Right" Background="#EE444444" CornerRadius="0,10,10,0">
+                <Border.Effect>
+                    <DropShadowEffect Color="Gray" ShadowDepth="0" BlurRadius="5" Opacity="0.3" Direction="180"/>
+                </Border.Effect>
+                <Border.RenderTransform>
+                    <TranslateTransform X="250" x:Name="tt"/>
+                </Border.RenderTransform>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="230"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Button x:Name="btn_CloseInfo" Width="40" Height="40" HorizontalAlignment="Left" VerticalAlignment="Top" Content="&#xe600;" FontFamily="../Assets/Fonts/#iconfont" Background="Transparent" BorderThickness="0" Foreground="#DDD"/>
+                    <Border Width="100" Height="100" CornerRadius="50">
+                        <Border.Effect>
+                            <DropShadowEffect Color="White" ShadowDepth="0" BlurRadius="5" Opacity="0.3" Direction="0"/>
+                        </Border.Effect>
+                        <Border.Background>
+                            <ImageBrush ImageSource="../Assets/Images/admin.png"/>
+                        </Border.Background>
+                    </Border>
+                    <Grid Grid.Row="1" Margin="20,10">
+                        <Grid.Resources>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="FontSize" Value="20"/>
+                                <Setter Property="Margin" Value="0,0,40,0"/>
+                            </Style>
+                            <Style TargetType="RadioButton">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="FontSize" Value="20"/>
+                                <Setter Property="Margin" Value="0,0,10,0"/>
+                            </Style>
+                        </Grid.Resources>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="45"/>
+                            <RowDefinition Height="45"/>
+                            <RowDefinition Height="45"/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                            <TextBlock Text="用户名"/>
+                            <TextBlock Text="{Binding User.UserName}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="1" VerticalAlignment="Center" Orientation="Horizontal">
+                            <TextBlock Text="性  别"/>
+                            <RadioButton Content="男" Template="{StaticResource GenderRadioButton}" IsChecked="{Binding User.Gender,Converter={StaticResource gender},ConverterParameter=1}"/>
+                            <RadioButton Content="女" Template="{StaticResource GenderRadioButton}" IsChecked="{Binding User.Gender,Converter={StaticResource gender},ConverterParameter=2}"/>
+                        </StackPanel>
+                        <StackPanel Grid.Row="2" VerticalAlignment="Center" Orientation="Horizontal">
+                            <TextBlock Text="权  限"/>
+                            <TextBlock Text="{Binding User.Permission}"/>
+                        </StackPanel>
+                    </Grid>
+                </Grid>
+                
+            </Border>
         </Grid>
     </Border>
 </Window>

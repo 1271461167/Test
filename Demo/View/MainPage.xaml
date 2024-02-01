@@ -4,9 +4,180 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Demo.View"
+             xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid Background="Transparent">
-        <TextBlock Text="首页"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="160"/>
+            <RowDefinition Height="360"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <UniformGrid Columns="4">
+            <Border CornerRadius="5" Background="White" Margin="10">
+                <Border.Effect>
+                    <DropShadowEffect Color="#F2F2F2" ShadowDepth="10" BlurRadius="105" Opacity="0.4" Direction="270"/>
+                </Border.Effect>
+                <Grid>
+                    <lvc:CartesianChart Margin="0,0,0,45">
+                        <lvc:CartesianChart.Series>
+                            <lvc:LineSeries Stroke="#FECC71" Fill="#FFF2DE"
+                                            PointGeometrySize="0"
+                                            Values="0,1,2,3,40,5,6,7"/>
+                        </lvc:CartesianChart.Series>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis ShowLabels="False"/>
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis ShowLabels="False" MinValue="0" MaxValue="100"/>
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
+                    <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="15" Orientation="Horizontal">
+                        <Border Width="20" Height="20" Background="#EDFAF0" CornerRadius="5">
+                            <TextBlock Text="&#xe662;" FontFamily="../Assets/Fonts/#iconfont" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                       Foreground="#7ADA95"/>
+                        </Border>
+                        <TextBlock Text="32%" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   Foreground="#7ADA95" Margin="5,0,0,0"/>
+
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="15,3">
+                        <Border Width="36" Height="36" Background="#FFF5E9" CornerRadius="10">
+                            <TextBlock Text="&#xf94e;" FontFamily="../Assets/Fonts/#iconfont" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                       FontSize="20"
+                                       Foreground="#FFBC57"
+                                       />
+                        </Border>
+                        <StackPanel Orientation="Vertical" Margin="15,0,0,0">
+                            <TextBlock Text="监控数据一" Foreground="#3F4C5D" FontSize="12"/>
+                            <TextBlock Text="32%" FontWeight="Bold" Foreground="#3F4C5D" FontSize="16"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Border CornerRadius="5" Background="White" Margin="10">
+                <Border.Effect>
+                    <DropShadowEffect Color="#F2F2F2" ShadowDepth="10" BlurRadius="105" Opacity="0.4" Direction="270"/>
+                </Border.Effect>
+                <Grid>
+                    <lvc:CartesianChart Margin="0,0,0,45">
+                        <lvc:CartesianChart.Series>
+                            <lvc:LineSeries Stroke="#FECC71" Fill="#FFF2DE"
+                                            PointGeometrySize="0"
+                                            Values="0,1,2,3,40,5,6,7"/>
+                        </lvc:CartesianChart.Series>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis ShowLabels="False"/>
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis ShowLabels="False" MinValue="0" MaxValue="100"/>
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
+                    <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="15" Orientation="Horizontal">
+                        <Border Width="20" Height="20" Background="#EDFAF0" CornerRadius="5">
+                            <TextBlock Text="&#xe662;" FontFamily="../Assets/Fonts/#iconfont" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                       Foreground="#7ADA95"/>
+                        </Border>
+                        <TextBlock Text="32%" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   Foreground="#7ADA95" Margin="5,0,0,0"/>
+
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="15,3">
+                        <Border Width="36" Height="36" Background="#FFF5E9" CornerRadius="10">
+                            <TextBlock Text="&#xf94e;" FontFamily="../Assets/Fonts/#iconfont" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                       FontSize="20"
+                                       Foreground="#FFBC57"
+                                       />
+                        </Border>
+                        <StackPanel Orientation="Vertical" Margin="15,0,0,0">
+                            <TextBlock Text="监控数据二" Foreground="#3F4C5D" FontSize="12"/>
+                            <TextBlock Text="32%" FontWeight="Bold" Foreground="#3F4C5D" FontSize="16"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Border CornerRadius="5" Background="White" Margin="10">
+                <Border.Effect>
+                    <DropShadowEffect Color="#F2F2F2" ShadowDepth="10" BlurRadius="105" Opacity="0.4" Direction="270"/>
+                </Border.Effect>
+                <Grid>
+                    <lvc:CartesianChart Margin="0,0,0,45">
+                        <lvc:CartesianChart.Series>
+                            <lvc:LineSeries Stroke="#FECC71" Fill="#FFF2DE"
+                                            PointGeometrySize="0"
+                                            Values="0,1,2,3,40,5,6,7"/>
+                        </lvc:CartesianChart.Series>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis ShowLabels="False"/>
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis ShowLabels="False" MinValue="0" MaxValue="100"/>
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
+                    <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="15" Orientation="Horizontal">
+                        <Border Width="20" Height="20" Background="#EDFAF0" CornerRadius="5">
+                            <TextBlock Text="&#xe662;" FontFamily="../Assets/Fonts/#iconfont" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                       Foreground="#7ADA95"/>
+                        </Border>
+                        <TextBlock Text="32%" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   Foreground="#7ADA95" Margin="5,0,0,0"/>
+
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="15,3">
+                        <Border Width="36" Height="36" Background="#FFF5E9" CornerRadius="10">
+                            <TextBlock Text="&#xf94e;" FontFamily="../Assets/Fonts/#iconfont" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                       FontSize="20"
+                                       Foreground="#FFBC57"
+                                       />
+                        </Border>
+                        <StackPanel Orientation="Vertical" Margin="15,0,0,0">
+                            <TextBlock Text="监控数据三" Foreground="#3F4C5D" FontSize="12"/>
+                            <TextBlock Text="32%" FontWeight="Bold" Foreground="#3F4C5D" FontSize="16"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Border>
+            <Border CornerRadius="5" Background="White" Margin="10">
+                <Border.Effect>
+                    <DropShadowEffect Color="#F2F2F2" ShadowDepth="10" BlurRadius="105" Opacity="0.4" Direction="270"/>
+                </Border.Effect>
+                <Grid>
+                    <lvc:CartesianChart Margin="0,0,0,45">
+                        <lvc:CartesianChart.Series>
+                            <lvc:LineSeries Stroke="#FECC71" Fill="#FFF2DE"
+                                            PointGeometrySize="0"
+                                            Values="0,1,2,3,40,5,6,7"/>
+                        </lvc:CartesianChart.Series>
+                        <lvc:CartesianChart.AxisX>
+                            <lvc:Axis ShowLabels="False"/>
+                        </lvc:CartesianChart.AxisX>
+                        <lvc:CartesianChart.AxisY>
+                            <lvc:Axis ShowLabels="False" MinValue="0" MaxValue="100"/>
+                        </lvc:CartesianChart.AxisY>
+                    </lvc:CartesianChart>
+                    <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="15" Orientation="Horizontal">
+                        <Border Width="20" Height="20" Background="#EDFAF0" CornerRadius="5">
+                            <TextBlock Text="&#xe662;" FontFamily="../Assets/Fonts/#iconfont" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                       Foreground="#7ADA95"/>
+                        </Border>
+                        <TextBlock Text="32%" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   Foreground="#7ADA95" Margin="5,0,0,0"/>
+
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Bottom" Margin="15,3">
+                        <Border Width="36" Height="36" Background="#FFF5E9" CornerRadius="10">
+                            <TextBlock Text="&#xf94e;" FontFamily="../Assets/Fonts/#iconfont" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                       FontSize="20"
+                                       Foreground="#FFBC57"
+                                       />
+                        </Border>
+                        <StackPanel Orientation="Vertical" Margin="15,0,0,0">
+                            <TextBlock Text="监控数据四" Foreground="#3F4C5D" FontSize="12"/>
+                            <TextBlock Text="32%" FontWeight="Bold" Foreground="#3F4C5D" FontSize="16"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </UniformGrid>
     </Grid>
 </UserControl>

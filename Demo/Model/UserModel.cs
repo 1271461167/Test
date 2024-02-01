@@ -30,6 +30,13 @@ namespace Demo.Model
 			get { return _permission; }
 			set { _permission = value;this.DoNotify(); }
 		}
+		private int _gender;
+
+		public int Gender
+		{
+			get { return _gender; }
+			set { _gender = value;this.DoNotify(); }
+		}
 
 
 	}

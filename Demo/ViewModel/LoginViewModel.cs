@@ -18,21 +18,23 @@ namespace Demo.ViewModel
         {
             LoginCommand.DoCanExecute = new Func<object, bool>((obj) => { return true; });
             LoginCommand.DoExecute = new Action<object>((obj) => { DoLogin(obj); });
-
         }
 
         private async void DoLogin(object obj)
         {
+            loginModel.ShowProgress=Visibility.Visible;
             Window loginView = obj as Window;
             loginModel.Info = "";
             if (string.IsNullOrEmpty(loginModel.UserName))
             {
                 loginModel.Info = "用户名不能为空";
+                loginModel.ShowProgress = Visibility.Collapsed;
                 return;
             }
             if (string.IsNullOrEmpty(loginModel.Password))
             {
                 loginModel.Info = "密码不能为空";
+                loginModel.ShowProgress = Visibility.Collapsed;
                 return;
             }
             try
@@ -48,7 +50,12 @@ namespace Demo.ViewModel
                 GlobalValues.role = user;
                 loginView.DialogResult = true;
             }
-            catch (Exception ex) { loginModel.Info = ex.Message;return; }
+            catch (Exception ex) 
+            {
+                loginModel.Info = ex.Message;
+                loginModel.ShowProgress = Visibility.Collapsed;
+                return;
+            }
         }
     }
 }

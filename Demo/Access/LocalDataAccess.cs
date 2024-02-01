@@ -59,6 +59,7 @@ namespace Demo.Access
             {
                 try
                 {
+                    Thread.Sleep(2000);
                     DataSet dataSet = new DataSet();
                     string sql = "select * from user where name=@username and password=@password";
                     cmd = new MySqlCommand();

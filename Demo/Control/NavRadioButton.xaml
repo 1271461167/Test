@@ -12,6 +12,9 @@
                         <Trigger Property="IsChecked" Value="True">
                             <Setter TargetName="root" Property="Background" Value="#44FFFFFF"/>
                         </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="root" Property="Background" Value="#22FFFFFF"/>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

@@ -11,5 +11,6 @@ namespace Demo.Common
         public string Name { get; set; }
         public string Password { get; set; }
         public string Identity {  get; set; }
+        public int Gender { get; set; }  
     }
 }

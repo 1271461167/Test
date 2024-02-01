@@ -24,10 +24,9 @@ namespace Demo.ViewModel
 
         private void DoNavChanged(object obj)
         {
-            Type type=Type.GetType("Demo.View."+obj.ToString());
-            object oframe = Activator.CreateInstance(type);
-            FrameworkElement frameworkElement = (FrameworkElement)oframe;
-            ViewModel.MainContent = frameworkElement;
+            Type type=Type.GetType("Demo.View."+obj.ToString());                //获取对象类型                    
+            ConstructorInfo constructor = type.GetConstructor(Type.EmptyTypes); 
+            ViewModel.MainContent = (FrameworkElement)constructor.Invoke(null); //返回该对象一个实例
         }
     }
 }
