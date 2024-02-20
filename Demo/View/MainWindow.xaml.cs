@@ -28,6 +28,9 @@ namespace Demo
             this.DataContext = new MainWindowViewModel();
             MainWindowViewModel.User.UserName = GlobalValues.role.Name;
             MainWindowViewModel.User.Permission = GlobalValues.role.Identity;
+            MainWindowViewModel.User.Gender = GlobalValues.role.Gender;
+            MainWindowViewModel.User.Avatar = GlobalValues.role.Avatar;
+            MainWindowViewModel.User.Age = GlobalValues.role.Age;
         }
     }
 }

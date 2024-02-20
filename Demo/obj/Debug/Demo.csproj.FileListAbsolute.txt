@@ -74,3 +74,9 @@ C:\Users\ywh\Desktop\Test1227\Demo\bin\Debug\LiveCharts.pdb
 C:\Users\ywh\Desktop\Test1227\Demo\bin\Debug\LiveCharts.xml
 C:\Users\ywh\Desktop\Test1227\Demo\bin\Debug\LiveCharts.Wpf.pdb
 C:\Users\ywh\Desktop\Test1227\Demo\bin\Debug\LiveCharts.Wpf.xml
+C:\Users\ywh\Desktop\Test\Demo\bin\Debug\LiveCharts.dll
+C:\Users\ywh\Desktop\Test\Demo\bin\Debug\LiveCharts.Wpf.dll
+C:\Users\ywh\Desktop\Test\Demo\bin\Debug\LiveCharts.pdb
+C:\Users\ywh\Desktop\Test\Demo\bin\Debug\LiveCharts.xml
+C:\Users\ywh\Desktop\Test\Demo\bin\Debug\LiveCharts.Wpf.pdb
+C:\Users\ywh\Desktop\Test\Demo\bin\Debug\LiveCharts.Wpf.xml

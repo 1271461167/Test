@@ -12,5 +12,7 @@ namespace Demo.Common
         public string Password { get; set; }
         public string Identity {  get; set; }
         public int Gender { get; set; }  
+        public string Avatar {  get; set; }
+        public int Age {  get; set; }
     }
 }
