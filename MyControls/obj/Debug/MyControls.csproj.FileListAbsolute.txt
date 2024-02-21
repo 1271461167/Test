@@ -1,0 +1,11 @@
+C:\Users\ywh\Desktop\Test1227\MyControls\bin\Debug\MyControls.dll
+C:\Users\ywh\Desktop\Test1227\MyControls\bin\Debug\MyControls.pdb
+C:\Users\ywh\Desktop\Test1227\MyControls\obj\Debug\MyControls.csproj.AssemblyReference.cache
+C:\Users\ywh\Desktop\Test1227\MyControls\obj\Debug\Instrument.g.cs
+C:\Users\ywh\Desktop\Test1227\MyControls\obj\Debug\MyControls_MarkupCompile.cache
+C:\Users\ywh\Desktop\Test1227\MyControls\obj\Debug\MyControls_MarkupCompile.lref
+C:\Users\ywh\Desktop\Test1227\MyControls\obj\Debug\Instrument.baml
+C:\Users\ywh\Desktop\Test1227\MyControls\obj\Debug\MyControls.g.resources
+C:\Users\ywh\Desktop\Test1227\MyControls\obj\Debug\MyControls.csproj.CoreCompileInputs.cache
+C:\Users\ywh\Desktop\Test1227\MyControls\obj\Debug\MyControls.dll
+C:\Users\ywh\Desktop\Test1227\MyControls\obj\Debug\MyControls.pdb

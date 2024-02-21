@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Demo.View"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+             xmlns:myc="clr-namespace:MyControls;assembly=MyControls"
              mc:Ignorable="d" 
              d:DesignHeight="750" d:DesignWidth="800">
     <Grid Background="Transparent">
@@ -267,7 +268,7 @@
                     <RowDefinition Height="40"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <TextBlock Text="指针仪表数据监控" Foreground="#3F4C5D" VerticalAlignment="Center" FontSize="15" FontWeight="Bold"/>
+                <TextBlock  Margin="10,0,0,0" Text="指针仪表数据监控" Foreground="#3F4C5D" VerticalAlignment="Center" FontSize="15" FontWeight="Bold"/>
                 <Border Grid.Row="1" Margin="10,0,0,0" CornerRadius="10">
                     <Border.Background>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
@@ -275,7 +276,34 @@
                             <GradientStop Color="#edfaf0" Offset="0.5"/>
                         </LinearGradientBrush>
                     </Border.Background>
-
+                    <Grid>
+                        <StackPanel VerticalAlignment="Top" HorizontalAlignment="Left" Margin="15" Orientation="Horizontal">
+                            <Border Width="20" Height="20" Background="#EDFAF0" CornerRadius="5">
+                                <TextBlock Text="&#xe662;" FontFamily="../Assets/Fonts/#iconfont" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   Foreground="#7ADA95"/>
+                            </Border>
+                            <TextBlock Text="32%" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   Foreground="#7ADA95" Margin="5,0,0,0"/>
+                        </StackPanel>
+                        
+                        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="30,0,0,20">
+                            <TextBlock Text="当前使用率" FontSize="14" Foreground="#3F4C5D"/>
+                            <TextBlock Text="+120%" FontSize="18" FontWeight="Bold" Foreground="#3F4C5D" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,30,20 ">
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left">
+                                <Border Width="20" Height="20" Background="#EDFAF0" CornerRadius="5">
+                                    <TextBlock Text="&#xe662;" FontFamily="../Assets/Fonts/#iconfont" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                       Foreground="#7ADA95"/>
+                                </Border>
+                                <TextBlock Text="32%" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                   Foreground="#7ADA95" Margin="5,0,0,0"/>
+                            </StackPanel>
+                            <TextBlock Text="最高使用率" HorizontalAlignment="Center" FontSize="12" Foreground="#3F4C5D"/>
+                        </StackPanel>
+                        <!--指针仪表-->
+                        <myc:Instrument Margin="0,20,0,40" Value="50"/>
+                    </Grid>
                 </Border>
             </Grid>
         </Grid>

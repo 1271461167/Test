@@ -166,5 +166,11 @@
   <ItemGroup>
     <Resource Include="Assets\Images\Dunkin-Logo.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MyControls\MyControls.csproj">
+      <Project>{aa234d8a-3166-4d3c-ae0c-0702843d0102}</Project>
+      <Name>MyControls</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

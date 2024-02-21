@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="MyControls.Instrument"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:MyControls"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+    <Grid>
+        <Ellipse x:Name="backEllipse" Fill="Orange"/>
+        <Canvas x:Name="mainCanvas" Width="{Binding Width, ElementName=backEllipse}" Height="{Binding Height,ElementName=backEllipse}"/>
+        <Path x:Name="circle" Data="" StrokeThickness="4" 
+              Width="{Binding Width, ElementName=backEllipse}" 
+              Height="{Binding Height,ElementName=backEllipse}" 
+              Stroke="White"
+              StrokeStartLineCap="Round"
+              StrokeEndLineCap="Round"
+              RenderTransformOrigin="0.5,0.5"
+              >
+            <Path.RenderTransform>
+                <RotateTransform Angle="-45"/>
+            </Path.RenderTransform>
+        </Path>
+        <Path x:Name="pointer" Data="" Fill="Green" 
+              Width="{Binding Width, ElementName=backEllipse}" 
+              Height="{Binding Height,ElementName=backEllipse}"             
+              RenderTransformOrigin="0.5,0.5"
+              >
+            <Path.RenderTransform>
+                <RotateTransform Angle="225" x:Name="rtPointer"/>
+            </Path.RenderTransform>
+        </Path>
+        <Border Width="20" Height="20" CornerRadius="10" Background="White">
+            
+        </Border>
+    </Grid>
+</UserControl>
