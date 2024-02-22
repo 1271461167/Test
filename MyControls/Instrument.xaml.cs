@@ -23,6 +23,16 @@ namespace MyControls
     public partial class Instrument : UserControl
     {
 
+        public int Interval
+        {
+            get { return (int)GetValue(IntervalProperty); }
+            set { SetValue(IntervalProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for Interval.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IntervalProperty =
+            DependencyProperty.Register("Interval", typeof(int), typeof(Instrument), new PropertyMetadata(default(int), new PropertyChangedCallback(OnPropertyChanged)));
+
 
 
         public int Min
@@ -70,6 +80,7 @@ namespace MyControls
         {
             InitializeComponent();
             this.SizeChanged += Ellipse_SizeChanged;
+            //Refresh();
         }
 
         private void Ellipse_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -77,15 +88,18 @@ namespace MyControls
             double miniSize = Math.Min(this.RenderSize.Width, this.RenderSize.Height);
             this.backEllipse.Width = miniSize;
             this.backEllipse.Height = miniSize;
+            Refresh();
         }
 
         private void Refresh()
         {
+            if (double.IsNaN(this.backEllipse.Width))
+                return;
             double r = this.backEllipse.Width / 2;
             this.mainCanvas.Children.Clear();
             int max = this.Max, min = this.Min;
             int scaleText = min;
-            int scaleAreaCount = 100;
+            int scaleAreaCount = 10*this.Interval;
             double step = 270.0 / scaleAreaCount;
             for (int i = 0; i <= scaleAreaCount; i++)
             {
@@ -106,7 +120,7 @@ namespace MyControls
                     line1.Stroke = Brushes.Black;
                     line1.StrokeThickness = 1;
                     TextBlock textBlock = new TextBlock();
-                    textBlock.Text = (scaleText + (max - min) / scaleAreaCount * i).ToString();
+                    textBlock.Text = (scaleText + (max - min)*1.0 / scaleAreaCount*1.0 * i).ToString();
                     textBlock.Foreground = Brushes.Black;
                     textBlock.Width = 30;
                     textBlock.TextAlignment = TextAlignment.Center;
@@ -127,7 +141,7 @@ namespace MyControls
             sData = string.Format(sData, 0.5 * r, r, r - 4, r + 4);
             converter = TypeDescriptor.GetConverter(typeof(Geometry));
             this.pointer.Data = (Geometry)converter.ConvertFromString(sData);
-            DoubleAnimation doubleAnimation = new DoubleAnimation(-this.Value * 270.0 / (max - min) + 225,new Duration(TimeSpan.FromMilliseconds(200)));
+            DoubleAnimation doubleAnimation = new DoubleAnimation(-(this.Value-min) * 270.0 / (max - min) + 225,new Duration(TimeSpan.FromMilliseconds(200)));
             this.rtPointer.BeginAnimation(RotateTransform.AngleProperty,doubleAnimation);
         }
     }

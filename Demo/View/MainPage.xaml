@@ -302,10 +302,63 @@
                             <TextBlock Text="最高使用率" HorizontalAlignment="Center" FontSize="12" Foreground="#3F4C5D"/>
                         </StackPanel>
                         <!--指针仪表-->
-                        <myc:Instrument Margin="0,20,0,40" Value="50"/>
+                        <myc:Instrument Margin="0,20,0,40" Value="{Binding mainPageModel.Value}" Max="80" Min="0" Interval="8"/>
                     </Grid>
                 </Border>
             </Grid>
+        </Grid>
+        <Grid Margin="0,0,10,0" Grid.Row="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="XXXX" Foreground="#3F4C5D" VerticalAlignment="Center" FontSize="15" FontWeight="Bold"/>
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <Hyperlink>详情</Hyperlink>
+            </TextBlock>
+            <ItemsControl Grid.Row="1">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <VirtualizingStackPanel/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Border Background="White" CornerRadius="10" Margin="0,5">
+                            <Border.Effect>
+                                <DropShadowEffect Color="Gray" ShadowDepth="0" BlurRadius="10" Opacity="0.2" Direction="0"/>
+                            </Border.Effect>
+                            <Grid Height="70">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="3.5*"/>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <StackPanel Grid.Row="1">
+                <Border Background="White" CornerRadius="10" Margin="0,5">
+                    <Border.Effect>
+                        <DropShadowEffect Color="Gray" ShadowDepth="0" BlurRadius="10" Opacity="0.2" Direction="0"/>
+                    </Border.Effect>
+                    <Grid Height="70">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="3.5*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        <lvc:PieChart Grid.Column="1" LegendLocation="Right">
+                            
+                        </lvc:PieChart>
+                    </Grid>
+                </Border>
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>
