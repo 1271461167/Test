@@ -15,3 +15,15 @@ create table user(id int auto_increment primary key, name varchar(50),age int,ge
 insert into user(name,age,gender,avatar,permission,password)values('admin',23,1,'../Assets/Images/admin.png','admin','123456');
 insert into user(name,age,gender,avatar,permission,password)values('operater',22,2,'../Assets/Images/operater.png','operater','484987');
 drop table user;
+
+use itcast;
+show tables;
+create table course(id int auto_increment primary key, course_name varchar(50),ispublished int);
+insert into course(course_name,ispublished)values('C#',1);
+insert into course(course_name,ispublished)values('C++',0);
+create table plantforms(plantname varchar(50) primary key,isvalid int);
+insert into plantforms(plantname,isvalid)values('Bilibili',1);
+insert into plantforms(plantname,isvalid)values('Huya',1);
+insert into plantforms(plantname,isvalid)values('Weibo',1);
+select * from plantforms;
+select * from course;
