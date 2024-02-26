@@ -1,4 +1,5 @@
-﻿using Demo.Model;
+﻿using Demo.Access;
+using Demo.Model;
 using LiveCharts;
 using LiveCharts.Defaults;
 using LiveCharts.Wpf;
@@ -14,11 +15,13 @@ namespace Demo.ViewModel
     public class MainPageViewModel
     {
         public MainPageModel mainPageModel { get; set; }=new MainPageModel();
+        public LocalDataAccess access { get; set; } = LocalDataAccess.GetInstance();
         public ObservableCollection<SeriesModel> SeriesModelList { get; set; }=new ObservableCollection<SeriesModel>();
         public MainPageViewModel()
         {
             mainPageModel.Value = 20;
             InitSeriesList();
+            access.GetCourseSeries();
         }
         private void InitSeriesList()
         {
