@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Net.Configuration;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Windows.Documents;
 using Demo.Common;
 using Demo.Model;
+using LiveCharts.Defaults;
+using LiveCharts;
+using LiveCharts.Wpf;
 using MySql.Data.MySqlClient;
 namespace Demo.Access
 {
@@ -94,7 +98,7 @@ namespace Demo.Access
                 {
                     throw new Exception("账户或密码错误");
                 }
-                finally { conn.Close(); }
+                finally { this.Dispose(); }
             }
             else
                 throw new Exception("数据库打开失败");
@@ -122,11 +126,33 @@ namespace Demo.Access
                     SeriesModel model = null;
                     foreach(DataRow row in dataSet.Tables[0].Rows)
                     {
-                        string tempId = row.Field<string>("course_name");
+                        string tempId = row.Field<string>("course_id");
                         if(courseId!= tempId)
                         {
-
+                            courseId = tempId;
+                            model = new SeriesModel();
+                            models.Add(model);
+                            model.Name = row.Field<string>("course_name");
+                            model.Series = new LiveCharts.SeriesCollection();
+                            model.SeriesList = new System.Collections.ObjectModel.ObservableCollection<CourseSeries>();
                         }
+                        if(model!=null)
+                        {
+                            model.Series.Add(new PieSeries
+                            {
+                                Title = row.Field<string>("plant_name"),
+                                Values = new ChartValues<ObservableValue> { new ObservableValue(row.Field<int>("play_count")) },
+                                DataLabels = false
+                            });
+                            model.SeriesList.Add(new CourseSeries 
+                            {
+                                Name=row.Field<string>("plant_name"),
+                                CurrentValue=row.Field<int>("play_count"),
+                                IsGrowing=row.Field<int>("isgrowing")==1,
+                                GrowRate=row.Field<int>("growrate")
+                            });
+                        }
+
                     }
 
                     return models;
@@ -136,7 +162,7 @@ namespace Demo.Access
                 {
                     throw new Exception("数据库连接失败");
                 }
-                finally { conn.Close(); }
+                finally { this.Dispose(); }
             }
             else
                 throw new Exception("数据库打开失败");

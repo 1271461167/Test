@@ -84,8 +84,8 @@
                 </StackPanel>
                 <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Center">
                     <RadioButton Content="首页" Style="{StaticResource NavRadioButton}" IsChecked="True" Command="{Binding NavChangedCommand}" CommandParameter="MainPage"/>
-                    <RadioButton Content="首页" Style="{StaticResource NavRadioButton}" Command="{Binding NavChangedCommand}" CommandParameter="ParameterPage"/>
-                    <RadioButton Content="首页" Style="{StaticResource NavRadioButton}"/>
+                    <RadioButton Content="参数" Style="{StaticResource NavRadioButton}" Command="{Binding NavChangedCommand}" CommandParameter="ParameterPage"/>
+                    <RadioButton Content="内容" Style="{StaticResource NavRadioButton}" Command="{Binding NavChangedCommand}" CommandParameter="ContentPage"/>
                     <RadioButton Content="首页" Style="{StaticResource NavRadioButton}"/>
                 </StackPanel>
                 <ContentControl Grid.Row="3" Content="{Binding ViewModel.MainContent}"/>

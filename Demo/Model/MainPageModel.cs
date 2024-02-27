@@ -17,5 +17,13 @@ namespace Demo.Model
 			set { _value = value;this.DoNotify(); }
 		}
 
+		private int itemCount;
+
+		public int ItemCount
+		{
+			get { return itemCount; }
+			set { itemCount = value;this.DoNotify(); }
+		}
+
 	}
 }
