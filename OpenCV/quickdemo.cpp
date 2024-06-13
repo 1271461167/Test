@@ -83,3 +83,21 @@ void QuickDemo::histogram_Demo(Mat& image)
 	imshow("BGR÷±∑ΩÕº", histImage);
 
 }
+void QuickDemo::video_Demo()
+{
+	VideoCapture capture(0);
+	Mat frame;
+	while (true)
+	{
+		capture.read(frame);
+		if (frame.empty())
+			break;
+		flip(frame, frame, 1);
+		imshow("…„œÒÕ∑",frame);
+
+		int c = waitKey(10);
+		if (c == 27)
+			break;
+	}
+	capture.release();
+}

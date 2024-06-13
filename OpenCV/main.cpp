@@ -8,8 +8,8 @@ int main(int argc,char** argv)
 	Mat src = imread("D:\\source\\cat.jpg");
 	//namedWindow("输入窗口", WINDOW_FREERATIO);
 	QuickDemo qd;
-	qd.histogram_Demo(src);
-	imshow("输入窗口", src);
+	qd.video_Demo();
+	//imshow("输入窗口", src);
 	waitKey(0);
 	destroyAllWindows();
 	return 0;
