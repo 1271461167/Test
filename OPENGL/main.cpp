@@ -67,13 +67,88 @@ void star()
 	glEnd();
 	glFlush();
 }
+void DDALine(int x1,int y1,int x2,int y2) 
+{
+	int x;
+	float dx, dy, y, k;
+	dx = x2 - x1;
+	dy = y2 - y1;
+	k = dy / dx;
+	for (x=x1,y=y1;x<=x2;x++,y+=k)
+	{
+		glBegin(GL_POINTS);
+		glVertex2f(x,int(y+0.5));
+		glEnd();
+	}
+	glFlush();
+	
+}
+void Bresenham(int x1, int y1, int x2, int y2)
+{
+	int x = x1, y = y1;
+	int dx = x2 - x1;
+	int dy = y2 - y1;
+	int d0 = dx - 2 * dy;
+	int d1 = 2 * dx - 2 * dy;
+	int d2 = - 2 * dy;
+	int d = d0;
+	for (;x<x2;x++)
+	{
+		glBegin(GL_POINTS);
+		glVertex2f(x, y);
+		glEnd();
+		if (d < 0)
+		{
+			y++;
+			d += d1;
+		}
+		else
+		{
+			d += d2;
+		}
+	}	
+	glFlush();
+}
+void Bresenham2(int x1, int y1, int x2, int y2)
+{
+	int x = x1, y = y1;
+	int dx = x2 - x1;
+	int dy = y2 - y1;
+	int d0 = 2*dx - dy;
+	int d1 = 2 * dx - 2 * dy;
+	int d2 = 2 * dx;
+	int d = d0;
+	for (; y< y2; y++)
+	{
+		glBegin(GL_POINTS);
+		glVertex2f(x, y);
+		glEnd();
+		if (d > 0)
+		{
+			x++;
+			d += d1;
+		}
+		else
+		{
+			d += d2;
+		}
+	}
+	glFlush();
+}
+void Test()
+{
+	glClear(GL_COLOR_BUFFER_BIT);
+	glColor3f(1.0, 0, 0);
+	Bresenham2(100, 200, 200, 600);
+	
+}
 void reshape(GLsizei w,GLsizei h)
 {
 
 	glViewport(0, 0, w, h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
-	gluOrtho2D(-200,200,-150,150);
+	gluOrtho2D(0,200,0,600);
 
 }
 void myreshape(GLsizei w, GLsizei h)
@@ -99,8 +174,8 @@ void main(int argc,char** argv)
 	//glutInitWindowSize(500,500);
 	//glutInitWindowPosition(0, 0);
 	glutCreateWindow("mywindow");
-	glutDisplayFunc(circle);
-	glutReshapeFunc(myreshape);
+	glutDisplayFunc(Test);
+	glutReshapeFunc(reshape);
 	init();
 	glutMainLoop();
 }
