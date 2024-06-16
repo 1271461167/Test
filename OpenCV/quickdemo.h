@@ -8,6 +8,7 @@ public:
 	void mouseDrawing_Demo(Mat& image);
 	void histogram_Demo(Mat& image);
 	void video_Demo();
+	void region_Grow(Mat& image);
 private:
 
 };

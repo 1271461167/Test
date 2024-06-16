@@ -42,6 +42,76 @@ static void onMouse(int event, int x, int y, int flags, void* userdata)
 
 
 }
+static void RegionGrow(Mat& src, Mat& dst, Point2i pt, int th)
+{
+	dst = Mat::zeros(src.size(), CV_8UC1);		//创建一个空白区域填充为黑色
+	dst.at<uchar>(pt.y, pt.x) = 255;			//标记生长点
+	int nGrowLabel = 0;							//标记是否生长过
+	int nSrcValue = src.at<uchar>(pt.y, pt.x);	//生长起点灰度值
+	int nCurValue = 0;							//当前点灰度值
+	Point2i ptGrowing;							//待生长位置
+	int DIR[8][2] = { {-1,-1},{-1,0},{-1,1},{0,1},{1,1},{1,0},{1,-1},{0,-1} };//生长方向
+	vector<Point2i> vcGrowpt;					//生长点栈
+	vcGrowpt.push_back(pt);						//生长起始点入栈
+	while (!vcGrowpt.empty())
+	{
+		pt = vcGrowpt.back();
+		vcGrowpt.pop_back();
+		for (int i = 0; i < 8; i++)
+		{
+			ptGrowing.x = pt.x + DIR[i][0];
+			ptGrowing.y = pt.y + DIR[i][1];
+			if (ptGrowing.x < 0 || ptGrowing.y < 0 || ptGrowing.x >(src.cols - 1) || (ptGrowing.y > src.rows - 1))
+				continue;
+			nGrowLabel = dst.at<uchar>(ptGrowing.y, ptGrowing.x);
+			if (nGrowLabel == 0)
+			{
+				nCurValue = src.at<uchar>(ptGrowing.y, ptGrowing.x);
+				if (abs(nCurValue - nSrcValue) <= th)
+				{
+					vcGrowpt.push_back(ptGrowing);
+					dst.at<uchar>(ptGrowing.y, ptGrowing.x) = 255;
+				}
+
+			}
+
+
+		}
+
+	}
+
+
+}
+static void onGrow(int event, int x, int y, int flags, void* userdata)
+{
+	Mat pic = *((Mat*)userdata);
+	Mat src_gray, dst;
+	if (pic.channels() > 1)
+		cv::cvtColor(pic, src_gray, COLOR_BGR2GRAY);
+	Point2i pt;
+	char str[16];
+	switch (event)
+	{
+	case EVENT_LBUTTONDOWN:
+	{
+		pt = Point2i(x, y);
+		cout << "(x,y)=" << "(" << x << "," << y << ")" << endl;
+	}
+	break;
+	case EVENT_LBUTTONUP:
+	{
+		circle(pic, Point2i(x, y), 1, Scalar(0, 0, 255), -1);
+		sprintf_s(str, "(%d,%d)", x, y);
+		namedWindow("dst", WINDOW_AUTOSIZE);
+		pt = Point2i(x, y);
+		RegionGrow(src_gray, dst, pt, 40);
+		imshow("dst", dst);
+		imshow("测试窗口", pic);
+	}
+	default:
+		break;
+	}
+}
 void QuickDemo::mouseDrawing_Demo(Mat& image)
 {
 	namedWindow("鼠标绘制", WINDOW_AUTOSIZE);
@@ -93,11 +163,17 @@ void QuickDemo::video_Demo()
 		if (frame.empty())
 			break;
 		flip(frame, frame, 1);
-		imshow("摄像头",frame);
+		imshow("摄像头", frame);
 
 		int c = waitKey(10);
 		if (c == 27)
 			break;
 	}
 	capture.release();
+}
+void QuickDemo::region_Grow(Mat& image)
+{
+	namedWindow("测试窗口", WINDOW_AUTOSIZE);
+	setMouseCallback("测试窗口", onGrow, (void*)&image);
+	imshow("测试窗口", image);
 }
