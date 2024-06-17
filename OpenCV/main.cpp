@@ -5,10 +5,10 @@ using namespace cv;
 using namespace std;
 int main(int argc, char** argv)
 {
-	Mat src = imread("D:\\source\\test.jpg");
+	Mat src = imread("E:\\Resources\\test.jpg");
 	//namedWindow("输入窗口", WINDOW_FREERATIO);
 	QuickDemo qd;
-	qd.region_Grow(src);
+	qd.canny_Demo(src);
 	//imshow("输入窗口", src);
 	waitKey(0);
 	destroyAllWindows();
