@@ -115,6 +115,24 @@ static void onGrow(int event, int x, int y, int flags, void* userdata)
 		break;
 	}
 }
+static bool checkInRang(int r, int c, int rows, int cols) {
+	if (r >= 0 && r < rows && c >= 0 && c < cols)
+		return true;
+	else
+		return false;
+}
+static void trace(cv::Mat& edgeMag_noMaxsup, cv::Mat& edge, int TL, int r, int c, int rows, int cols) {
+	if (edge.at<uchar>(r, c) == 0) {
+		edge.at<uchar>(r, c) = 255;
+		for (int i = -1; i <= 1; ++i) {
+			for (int j = -1; j <= 1; ++j) {
+				int mag = edgeMag_noMaxsup.at<ushort>(r + i, c + j);
+				if (checkInRang(r + i, c + j, rows, cols) && mag >= TL)
+					trace(edgeMag_noMaxsup, edge, TL, r + i, c + j, rows, cols);
+			}
+		}
+	}
+}
 void QuickDemo::mouseDrawing_Demo(Mat& image)
 {
 	namedWindow("鼠标绘制", WINDOW_AUTOSIZE);
@@ -189,11 +207,12 @@ void QuickDemo::canny_Demo(Mat& image)
 		cvtColor(image, src_gray, COLOR_BGR2GRAY);
 	//高斯滤波
 	GaussianBlur(src_gray, gauss, Size(5, 5), 0);
+	//Canny(gauss, dst, 50, 150);
 	//将CV_8UC1转换成CV_16SC1卷积会产生负数
 	gauss.convertTo(gauss1, CV_16SC1, 1, 0);
 	//梯度计算  Sobel算子
 	Mat m1 = (Mat_<char>(3, 3) << -1, 0, 1, -2, 0, 2, -1, 0, 1);//水平梯度
-	Mat m3 = (Mat_<char>(3, 3) << 1, 0, -1, 2, 0, -2, 1, 0, -1);//竖直梯度
+	Mat m3 = (Mat_<char>(3, 3) << -1, -2, -1, 0, 0, 0, 1, 2, 1);//竖直梯度
 	filter2D(gauss1, gradx, -1, m1);//水平梯度矩阵
 	filter2D(gauss1, grady, -1, m3);//竖直梯度矩阵
 	Mat grad = Mat::zeros(gradx.size(), CV_16UC1);
@@ -204,6 +223,7 @@ void QuickDemo::canny_Demo(Mat& image)
 			grad.at<ushort>(j, i) = cvRound(sqrt(pow(gradx.at<short>(j, i), 2) + pow(grady.at<short>(j, i), 2)));
 		}
 	}
+	//convertScaleAbs(grad, dst);
 #pragma region  Sobel算子
 
 
@@ -221,9 +241,10 @@ void QuickDemo::canny_Demo(Mat& image)
 	////    合并梯度
 	//Mat dstImage;
 	//addWeighted(abs_grad_x, 0.5, abs_grad_y, 0.5, 0, dstImage);
-	////imshow("sobel", abs_grad_x);
+	//imshow("sobel", abs_grad_x);
 #pragma endregion
 	//梯度幅值的非极大值抑制
+#pragma region 非极大值抑制
 	int g1, g2, g3, g4;
 	double dTemp1, dTemp2;
 	Mat result = Mat::zeros(image.size(), CV_16UC1);
@@ -237,18 +258,87 @@ void QuickDemo::canny_Demo(Mat& image)
 				result.at<ushort>(j, i) = 0;
 				continue;
 			}
+			//|gx|>|gy|
 			if (abs(gradx.at<short>(j, i)) > abs(grady.at<short>(j, i)))
 			{
 				weight = (double)abs(grady.at<short>(j, i)) / abs(gradx.at<short>(j, i));
 				g2 = grad.at<ushort>(j, i - 1);
 				g4 = grad.at<ushort>(j, i + 1);
+				//同号
+				//	g1
+				//	g2	C	g4
+				//			g3
 				if (gradx.at<short>(j, i) * grady.at<short>(j, i) > 0)
 				{
 					g1 = grad.at<ushort>(j - 1, i - 1);
-					g3= grad.at<ushort>(j + 1, i + 1);
+					g3 = grad.at<ushort>(j + 1, i + 1);
 					dTemp1 = weight * g1 + (1 - weight) * g2;
 					dTemp2 = weight * g3 + (1 - weight) * g4;
-					if (grad.at<ushort>(j,i)>=dTemp1&& grad.at<ushort>(j, i) >= dTemp2)
+					if (grad.at<ushort>(j, i) >= dTemp1 && grad.at<ushort>(j, i) >= dTemp2)
+					{
+						result.at<ushort>(j, i) = grad.at<ushort>(j, i);
+					}
+					else
+					{
+						result.at<ushort>(j, i) = 0;
+					}
+				}
+				//异号
+				//			g3
+				//	g2	C	g4
+				//	g1
+				else
+				{
+					g1 = grad.at<ushort>(j + 1, i - 1);
+					g3 = grad.at<ushort>(j - 1, i + 1);
+					dTemp1 = weight * g1 + (1 - weight) * g2;
+					dTemp2 = weight * g3 + (1 - weight) * g4;
+					if (grad.at<ushort>(j, i) >= dTemp1 && grad.at<ushort>(j, i) >= dTemp2)
+					{
+						result.at<ushort>(j, i) = grad.at<ushort>(j, i);
+					}
+					else
+					{
+						result.at<ushort>(j, i) = 0;
+					}
+				}
+			}
+			//|gx|<=|gy|
+			else
+			{
+				weight = (double)abs(gradx.at<short>(j, i)) / abs(grady.at<short>(j, i));
+				g2 = grad.at<ushort>(j - 1, i);
+				g4 = grad.at<ushort>(j + 1, i);
+				//同号
+				//	g1	g2
+				//		C	
+				//		g4	g3
+				if (gradx.at<short>(j, i) * grady.at<short>(j, i) > 0)
+				{
+					g1 = grad.at<ushort>(j - 1, i - 1);
+					g3 = grad.at<ushort>(j + 1, i + 1);
+					dTemp1 = weight * g1 + (1 - weight) * g2;
+					dTemp2 = weight * g3 + (1 - weight) * g4;
+					if (grad.at<ushort>(j, i) >= dTemp1 && grad.at<ushort>(j, i) >= dTemp2)
+					{
+						result.at<ushort>(j, i) = grad.at<ushort>(j, i);
+					}
+					else
+					{
+						result.at<ushort>(j, i) = 0;
+					}
+				}
+				//异号
+				//		g2	g1
+				//		C	
+				//	g3	g4
+				else
+				{
+					g1 = grad.at<ushort>(j - 1, i + 1);
+					g3 = grad.at<ushort>(j + 1, i - 1);
+					dTemp1 = weight * g1 + (1 - weight) * g2;
+					dTemp2 = weight * g3 + (1 - weight) * g4;
+					if (grad.at<ushort>(j, i) >= dTemp1 && grad.at<ushort>(j, i) >= dTemp2)
 					{
 						result.at<ushort>(j, i) = grad.at<ushort>(j, i);
 					}
@@ -261,7 +351,25 @@ void QuickDemo::canny_Demo(Mat& image)
 
 		}
 	}
-	convertScaleAbs(result, dst);
+#pragma endregion
+	//双阈值化
+#pragma region 双阈值化
+	Mat edge = cv::Mat::zeros(image.size(), CV_8UC1);
+	for (int r = 1; r < image.rows - 1; ++r) {
+		for (int c = 1; c < image.cols - 1; ++c) {
+			int mag = result.at<ushort>(r, c);
+			//大于高阈值，为确定边缘点
+			if (mag >= 120)
+				trace(result, edge, 50, r, c, image.rows, image.cols);
+			else if (mag < 50)
+				edge.at<uchar>(r, c) = 0;
+		}
+	}
+
+#pragma endregion
+
+	//convertScaleAbs(result, dst);
 	imshow("Gauss", gauss);
-	imshow("dst", dst);
+	imshow("edge", edge);
+	//imshow("dst", dst);
 }
