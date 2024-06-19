@@ -182,48 +182,86 @@ void QuickDemo::region_Grow(Mat& image)
 }
 void QuickDemo::canny_Demo(Mat& image)
 {
-	Mat dst, src_gray, gauss,gauss1;
+	Mat dst, src_gray, gauss, gauss1;
 	dst = Mat::zeros(image.size(), CV_16SC1);
-	Mat M1, M3;
+	Mat gradx, grady;
 	if (image.channels() > 1)
 		cvtColor(image, src_gray, COLOR_BGR2GRAY);
 	//高斯滤波
 	GaussianBlur(src_gray, gauss, Size(5, 5), 0);
 	//将CV_8UC1转换成CV_16SC1卷积会产生负数
-	gauss.convertTo(gauss1,CV_16SC1,1,0);
+	gauss.convertTo(gauss1, CV_16SC1, 1, 0);
 	//梯度计算  Sobel算子
 	Mat m1 = (Mat_<char>(3, 3) << -1, 0, 1, -2, 0, 2, -1, 0, 1);//水平梯度
 	Mat m3 = (Mat_<char>(3, 3) << 1, 0, -1, 2, 0, -2, 1, 0, -1);//竖直梯度
-	filter2D(gauss1, M1, -1, m1);//水平梯度矩阵
-	filter2D(gauss1, M3, -1, m3);//竖直梯度矩阵
-	Mat grad = Mat::zeros(M1.size(), CV_16UC1);
-	for (int i=0;i<M1.cols;i++)
+	filter2D(gauss1, gradx, -1, m1);//水平梯度矩阵
+	filter2D(gauss1, grady, -1, m3);//竖直梯度矩阵
+	Mat grad = Mat::zeros(gradx.size(), CV_16UC1);
+	for (int i = 0; i < gradx.cols; i++)
 	{
-		for (int j = 0; j < M1.rows; j++)
+		for (int j = 0; j < gradx.rows; j++)
 		{
-			grad.at<ushort>(j, i) = cvRound(sqrt(pow(M1.at<short>(j, i), 2)+pow(M3.at<short>(j, i), 2)));
+			grad.at<ushort>(j, i) = cvRound(sqrt(pow(gradx.at<short>(j, i), 2) + pow(grady.at<short>(j, i), 2)));
 		}
 	}
+#pragma region  Sobel算子
 
-		//Mat grad_x, grad_y;
-		//Mat abs_grad_x, abs_grad_y;
-		////    计算x方向的梯度
-		//Sobel(gauss, grad_x, CV_16S, 1, 0, 3, 1, 0, BORDER_DEFAULT);
-		//convertScaleAbs(grad_x, abs_grad_x);
 
-		////    计算y方向的梯度
-		//Sobel(gauss, grad_y, CV_16S, 0, 1, 3, 1, 0, BORDER_DEFAULT);
-		//convertScaleAbs(grad_y, abs_grad_y);
 
-		////    合并梯度
-		//Mat dstImage;
-		//addWeighted(abs_grad_x, 0.5, abs_grad_y, 0.5, 0, dstImage);
-		////imshow("sobel", abs_grad_x);
+	//Mat grad_x, grad_y;
+	//Mat abs_grad_x, abs_grad_y;
+	////    计算x方向的梯度
+	//Sobel(gauss, grad_x, CV_16S, 1, 0, 3, 1, 0, BORDER_DEFAULT);
+	//convertScaleAbs(grad_x, abs_grad_x);
 
+	////    计算y方向的梯度
+	//Sobel(gauss, grad_y, CV_16S, 0, 1, 3, 1, 0, BORDER_DEFAULT);
+	//convertScaleAbs(grad_y, abs_grad_y);
+
+	////    合并梯度
+	//Mat dstImage;
+	//addWeighted(abs_grad_x, 0.5, abs_grad_y, 0.5, 0, dstImage);
+	////imshow("sobel", abs_grad_x);
+#pragma endregion
 	//梯度幅值的非极大值抑制
 	int g1, g2, g3, g4;
+	double dTemp1, dTemp2;
+	Mat result = Mat::zeros(image.size(), CV_16UC1);
 	double weight;
-	double dTemp, dTemp1, dTemp2;
-	
-	imshow("dst", gauss);
+	for (int i = 1; i < image.cols - 1; i++)
+	{
+		for (int j = 1; j < image.rows - 1; j++)
+		{
+			if (grad.at<ushort>(j, i) == 0)
+			{
+				result.at<ushort>(j, i) = 0;
+				continue;
+			}
+			if (abs(gradx.at<short>(j, i)) > abs(grady.at<short>(j, i)))
+			{
+				weight = (double)abs(grady.at<short>(j, i)) / abs(gradx.at<short>(j, i));
+				g2 = grad.at<ushort>(j, i - 1);
+				g4 = grad.at<ushort>(j, i + 1);
+				if (gradx.at<short>(j, i) * grady.at<short>(j, i) > 0)
+				{
+					g1 = grad.at<ushort>(j - 1, i - 1);
+					g3= grad.at<ushort>(j + 1, i + 1);
+					dTemp1 = weight * g1 + (1 - weight) * g2;
+					dTemp2 = weight * g3 + (1 - weight) * g4;
+					if (grad.at<ushort>(j,i)>=dTemp1&& grad.at<ushort>(j, i) >= dTemp2)
+					{
+						result.at<ushort>(j, i) = grad.at<ushort>(j, i);
+					}
+					else
+					{
+						result.at<ushort>(j, i) = 0;
+					}
+				}
+			}
+
+		}
+	}
+	convertScaleAbs(result, dst);
+	imshow("Gauss", gauss);
+	imshow("dst", dst);
 }
