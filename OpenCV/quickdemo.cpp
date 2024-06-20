@@ -354,15 +354,48 @@ void QuickDemo::canny_Demo(Mat& image)
 #pragma endregion
 	//双阈值化
 #pragma region 双阈值化
-	Mat edge = cv::Mat::zeros(image.size(), CV_8UC1);
+	Mat edge2 = cv::Mat::zeros(image.size(), CV_8UC1);
 	for (int r = 1; r < image.rows - 1; ++r) {
 		for (int c = 1; c < image.cols - 1; ++c) {
 			int mag = result.at<ushort>(r, c);
 			//大于高阈值，为确定边缘点
 			if (mag >= 120)
-				trace(result, edge, 50, r, c, image.rows, image.cols);
-			else if (mag < 50)
-				edge.at<uchar>(r, c) = 0;
+				trace(result, edge2, 50, r, c, image.rows, image.cols);
+			else if (mag <= 50)
+				edge2.at<uchar>(r, c) = 0;
+		}
+	}
+	int TH = 120, TL = 50;
+	vector<Point2i> vcGrow;
+	Mat edge = Mat::zeros(image.size(), CV_8UC1);
+	for (int i = 0; i < edge.rows; i++)
+	{
+		for (int j = 0; j < edge.cols; j++)
+		{
+			int value = result.at<ushort>(i, j);
+			if (value >= TH)
+			{
+				edge.at<uchar>(i, j) = 255;
+				vcGrow.push_back(Point2i(i,j));
+			}			
+		}
+	}
+	while (!vcGrow.empty())
+	{
+		Point2i pt = vcGrow.back();
+		vcGrow.pop_back();
+		for (int i=-1;i<=1;i++)
+		{
+			for (int j=-1;j<=1;j++)
+			{
+				if (checkInRang(pt.x + i, pt.y + j, edge.rows, edge.cols) == false)
+					continue;
+				if (edge.at<uchar>(pt.x + i, pt.y + j)==0&&result.at<ushort>(pt.x+i,pt.y+j)>=TL)
+				{
+					edge.at<uchar>(pt.x + i, pt.y + j) = 255;
+					vcGrow.push_back(Point2i(pt.x + i, pt.y + j));
+				}
+			}
 		}
 	}
 
@@ -371,5 +404,6 @@ void QuickDemo::canny_Demo(Mat& image)
 	//convertScaleAbs(result, dst);
 	imshow("Gauss", gauss);
 	imshow("edge", edge);
+	imshow("edge2", edge2);
 	//imshow("dst", dst);
 }
