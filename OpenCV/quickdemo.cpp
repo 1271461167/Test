@@ -198,10 +198,9 @@ void QuickDemo::region_Grow(Mat& image)
 	setMouseCallback("测试窗口", onGrow, (void*)&image);
 	imshow("测试窗口", image);
 }
-void QuickDemo::canny_Demo(Mat& image)
+Mat QuickDemo::canny_Demo(Mat& image)
 {
-	Mat dst, src_gray, gauss, gauss1;
-	dst = Mat::zeros(image.size(), CV_16SC1);
+	Mat src_gray, gauss, gauss1;
 	Mat gradx, grady;
 	if (image.channels() > 1)
 		cvtColor(image, src_gray, COLOR_BGR2GRAY);
@@ -354,17 +353,17 @@ void QuickDemo::canny_Demo(Mat& image)
 #pragma endregion
 	//双阈值化
 #pragma region 双阈值化
-	Mat edge2 = cv::Mat::zeros(image.size(), CV_8UC1);
-	for (int r = 1; r < image.rows - 1; ++r) {
-		for (int c = 1; c < image.cols - 1; ++c) {
-			int mag = result.at<ushort>(r, c);
-			//大于高阈值，为确定边缘点
-			if (mag >= 120)
-				trace(result, edge2, 50, r, c, image.rows, image.cols);
-			else if (mag <= 50)
-				edge2.at<uchar>(r, c) = 0;
-		}
-	}
+	//Mat edge2 = cv::Mat::zeros(image.size(), CV_8UC1);
+	//for (int r = 1; r < image.rows - 1; ++r) {
+	//	for (int c = 1; c < image.cols - 1; ++c) {
+	//		int mag = result.at<ushort>(r, c);
+	//		//大于高阈值，为确定边缘点
+	//		if (mag >= 120)
+	//			trace(result, edge2, 50, r, c, image.rows, image.cols);
+	//		else if (mag <= 50)
+	//			edge2.at<uchar>(r, c) = 0;
+	//	}
+	//}
 	int TH = 120, TL = 50;
 	vector<Point2i> vcGrow;
 	Mat edge = Mat::zeros(image.size(), CV_8UC1);
@@ -376,21 +375,21 @@ void QuickDemo::canny_Demo(Mat& image)
 			if (value >= TH)
 			{
 				edge.at<uchar>(i, j) = 255;
-				vcGrow.push_back(Point2i(i,j));
-			}			
+				vcGrow.push_back(Point2i(i, j));
+			}
 		}
 	}
 	while (!vcGrow.empty())
 	{
 		Point2i pt = vcGrow.back();
 		vcGrow.pop_back();
-		for (int i=-1;i<=1;i++)
+		for (int i = -1; i <= 1; i++)
 		{
-			for (int j=-1;j<=1;j++)
+			for (int j = -1; j <= 1; j++)
 			{
 				if (checkInRang(pt.x + i, pt.y + j, edge.rows, edge.cols) == false)
 					continue;
-				if (edge.at<uchar>(pt.x + i, pt.y + j)==0&&result.at<ushort>(pt.x+i,pt.y+j)>=TL)
+				if (edge.at<uchar>(pt.x + i, pt.y + j) == 0 && result.at<ushort>(pt.x + i, pt.y + j) >= TL)
 				{
 					edge.at<uchar>(pt.x + i, pt.y + j) = 255;
 					vcGrow.push_back(Point2i(pt.x + i, pt.y + j));
@@ -401,9 +400,61 @@ void QuickDemo::canny_Demo(Mat& image)
 
 #pragma endregion
 
-	//convertScaleAbs(result, dst);
 	imshow("Gauss", gauss);
 	imshow("edge", edge);
-	imshow("edge2", edge2);
-	//imshow("dst", dst);
+	return edge;
+}
+void QuickDemo::hough_Demo(Mat& image)
+{
+	if (image.empty())
+		return;
+	int row = image.rows;
+	int col = image.cols;
+	double rho=1, theat=1;
+	int houghMat_cols = 360 / theat;
+	int houghMat_rows = sqrt(col*col+row*row);
+	Mat houghMat = Mat::zeros(houghMat_rows, houghMat_cols,CV_16UC1);
+	int Threshold = 100;
+	vector<Vec2f> lines;
+	for (int i = 0; i < row; i++)
+	{
+		for (int j = 0; j < col; j++)
+		{
+			if (image.at<uchar>(i, j) != 0)
+			{
+				for (int k=0;k<360;k+=theat)
+				{
+					double r = i * sin(k*CV_PI/180) + j * cos(k * CV_PI / 180);
+					if (r>=0)
+					{
+						int R = cvRound(r);
+						int T = k / theat;
+						houghMat.at<ushort>(R, T) += 1;
+					}
+				}
+			}
+		}
+	}
+	for (int i=0;i< houghMat_rows;i++)
+	{
+		for (int j=0;j< houghMat_cols;j++)
+		{
+			if (houghMat.at<ushort>(i, j)> Threshold)
+			{
+				Vec2f line(i,j*theat*CV_PI/180);
+				lines.push_back(line);
+			}
+		}
+	}
+	//画直线
+	Point pt1, pt2;
+	for (int i = 0; i < lines.size(); i++)
+	{
+		float r = lines[i][0];
+		float th = lines[i][1];
+		double a = cos(th);
+		double b = sin(th);
+	}
+
+
 }

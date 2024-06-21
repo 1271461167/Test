@@ -9,7 +9,8 @@ public:
 	void histogram_Demo(Mat& image);
 	void video_Demo();
 	void region_Grow(Mat& image);
-	void canny_Demo(Mat& image);
+	Mat canny_Demo(Mat& image);
+	void hough_Demo(Mat& image);
 private:
 
 };
