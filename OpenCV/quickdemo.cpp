@@ -414,10 +414,10 @@ void QuickDemo::hough_Demo(Mat& image)
 	int houghMat_cols = 360 / theat;
 	int houghMat_rows = sqrt(col*col+row*row);
 	Mat houghMat = Mat::zeros(houghMat_rows, houghMat_cols,CV_16UC1);
-	int Threshold = 100;
+	int Threshold = 90;
 	vector<Vec2f> lines;
-	vector<Vec2f> lines2;
-	HoughLines(image, lines2,1,CV_PI/180,100,0,0);
+	//vector<Vec2f> lines2;
+	//HoughLines(image, lines2,1,CV_PI/180,100,0,0);
 	for (int i = 0; i < row; i++)
 	{
 		for (int j = 0; j < col; j++)
@@ -448,29 +448,45 @@ void QuickDemo::hough_Demo(Mat& image)
 			}
 		}
 	}
+	//剔除相近直线
+	vector<Vec2f> newLines;
+	Vec2f mline = lines[0];
+	newLines.push_back(mline);
+	for (int i=1;i< lines.size();i++)
+	{
+		for (int j=0;j<newLines.size();j++)
+		{
+			if (abs(newLines[j][0] - lines[i][0]) <= 1000 && abs(newLines[j][1] - lines[i][1]) <= 1*CV_PI/180)
+			{						
+				break;
+			}
+			else
+			{
+				if (j == newLines.size()-1)
+				{
+					mline = lines[i];
+					newLines.push_back(mline);
+				}				
+			}
+
+		}
+	}
 	//画直线
 	Point pt1, pt2;
-	for (int i = 0; i < lines2.size(); i++)
+	for (int i = 0; i < newLines.size(); i++)
 	{
-		float r = lines2[i][0];
-		float th = lines2[i][1];
+		float r = newLines[i][0];
+		float th = newLines[i][1];
 		double a = cos(th);
 		double b = sin(th);
 		double x0 = a * r, y0 = b * r;
 		double length = max(row, col);
 		pt1.x = cvRound(x0 + length * (-b));
 		pt1.y = cvRound(y0 + length * (a));
-		/*pt2.x = cvRound(x0);
-		pt2.x = cvRound(y0);*/
 		pt2.x = cvRound(x0 - length * (-b));
 		pt2.y = cvRound(y0 - length * (a));
-		while (pt1.x == pt2.x && pt1.y == pt2.y)
-		{
-			//计算直线上的另一点
-			pt2.x = cvRound(x0 + length * (-b));
-			pt2.y = cvRound(y0 + length * (a));
-		}
-		line(image, pt1, pt2, Scalar(255), 1);
+
+		line(image, pt1, pt2, Scalar(255), 1,LINE_AA);
 		imshow("image", image);
 	}
 
