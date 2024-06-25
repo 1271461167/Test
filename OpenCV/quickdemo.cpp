@@ -414,7 +414,7 @@ void QuickDemo::hough_Demo(Mat& image)
 	int houghMat_cols = 360 / theat;
 	int houghMat_rows = sqrt(col*col+row*row);
 	Mat houghMat = Mat::zeros(houghMat_rows, houghMat_cols,CV_16UC1);
-	int Threshold = 90;
+	int Threshold = 250;
 	vector<Vec2f> lines;
 	//vector<Vec2f> lines2;
 	//HoughLines(image, lines2,1,CV_PI/180,100,0,0);
@@ -456,7 +456,7 @@ void QuickDemo::hough_Demo(Mat& image)
 	{
 		for (int j=0;j<newLines.size();j++)
 		{
-			if (abs(newLines[j][0] - lines[i][0]) <= 1000 && abs(newLines[j][1] - lines[i][1]) <= 1*CV_PI/180)
+			if (abs(newLines[j][0] - lines[i][0]) <= 20 && abs(newLines[j][1] - lines[i][1]) <= 20 * CV_PI / 180)
 			{						
 				break;
 			}
@@ -473,6 +473,7 @@ void QuickDemo::hough_Demo(Mat& image)
 	}
 	//»­Ö±Ïß
 	Point pt1, pt2;
+	Mat src = imread("E:\\Resources\\0626.jpg");
 	for (int i = 0; i < newLines.size(); i++)
 	{
 		float r = newLines[i][0];
@@ -485,9 +486,8 @@ void QuickDemo::hough_Demo(Mat& image)
 		pt1.y = cvRound(y0 + length * (a));
 		pt2.x = cvRound(x0 - length * (-b));
 		pt2.y = cvRound(y0 - length * (a));
-
-		line(image, pt1, pt2, Scalar(255), 1,LINE_AA);
-		imshow("image", image);
+		line(src, pt1, pt2, Scalar(255), 1,LINE_AA);
+		imshow("image", src);
 	}
 
 

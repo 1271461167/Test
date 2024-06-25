@@ -5,7 +5,7 @@ using namespace cv;
 using namespace std;
 int main(int argc, char** argv)
 {
-	Mat src = imread("D:\\source\\test.jpg");
+	Mat src = imread("E:\\Resources\\0626.jpg");
 	//namedWindow(" ‰»Î¥∞ø⁄", WINDOW_FREERATIO);
 	QuickDemo qd;
 	Mat image= qd.canny_Demo(src);
